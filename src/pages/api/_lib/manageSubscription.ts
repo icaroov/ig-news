@@ -5,7 +5,8 @@ import { stripe } from '../../../services/stripe'
 
 export async function saveSubscription(
   subscriptionId: string,
-  customerId: string
+  customerId: string,
+  createAction = false
 ) {
   const getUserRef = q.Select(
     'ref',
@@ -27,5 +28,17 @@ export async function saveSubscription(
     data: subscriptionData,
   })
 
-  await fauna.query(saveOnDb)
+  const updateSubscription = q.Replace(
+    q.Select(
+      'ref',
+      q.Get(q.Match(q.Index('subscription_by_id'), subscriptionId))
+    ),
+    { data: subscriptionData }
+  )
+
+  if (createAction) {
+    await fauna.query(saveOnDb)
+  } else {
+    await fauna.query(updateSubscription)
+  }
 }
