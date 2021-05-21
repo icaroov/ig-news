@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
+import { Session } from 'next-auth'
 import { getSession } from 'next-auth/client'
 import { RichText } from 'prismic-dom'
 
@@ -15,6 +16,14 @@ type PostProps = {
     updatedAt: string
   }
 }
+
+type SessionProps = {
+  activeSubscription?: {
+    data: {
+      status: string
+    }
+  }
+} & Session
 
 export default function Post({ post }: PostProps) {
   return (
@@ -41,12 +50,23 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   params,
 }) => {
-  const session = await getSession({ req })
+  const session: SessionProps = await getSession({ req })
   const { slug } = params
+
+  console.log(session.activeSubscription)
+
+  if (!session.activeSubscription) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
   const prismic = getPrismicClient(req)
 
   const response = await prismic.getByUID('post', String(slug), {})
-  console.log(response.data)
 
   const formattedDate = new Date(
     response.last_publication_date
