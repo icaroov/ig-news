@@ -31,11 +31,3 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## 👨‍💻 Author
-
-<a href="https://github.com/icaroov">
- <img style="border-radius: 50%;" src="https://avatars.githubusercontent.com/u/20347877?s=460&u=85f5e8a7d10a74a188284027280d8e2e374f17b1&v=4" width="100px;" alt=""/>
- <br />
- <sub><b>Ícaro Oliveira</b></sub></a> <a href="https://github.com/icaroov" title="Rocketseat">⚡</a>
- <br />
