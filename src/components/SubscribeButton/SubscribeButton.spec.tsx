@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react'
-import { mocked } from 'ts-jest/utils'
+import { mocked } from 'jest-mock'
 import { signIn, useSession } from 'next-auth/client'
 import { useRouter } from 'next/router'
 
